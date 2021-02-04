@@ -1,0 +1,26 @@
+{
+  "name": "project-a",
+  "version": "1.0.0",
+  "description": "A secret project about stuff.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samuelsogbesan/project-a.git"
+  },
+  "author": "Samuel Sogbesan, Bailegh Cordice",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/samuelsogbesan/project-a/issues"
+  },
+  "homepage": "https://github.com/samuelsogbesan/project-a#readme",
+  "dependencies": {
+    "discord.js": "^12.5.1"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.7"
+  }
+}
