@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/samuelsogbesan/project-a/issues"
   },
-  "homepage": "https://github.com/samuelsogbesan/project-a#readme"
+  "homepage": "https://github.com/samuelsogbesan/project-a#readme",
+  "dependencies": {
+    "discord.js": "^12.5.1"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.7"
+  }
 }
