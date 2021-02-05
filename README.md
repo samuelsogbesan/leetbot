@@ -4,7 +4,7 @@ A Discord Bot Project by Sam & Baileigh.
 
 ## Installation
 ### Required Files
-1. a .env file in the root of the project, with the <code>BOT_TOKEN</code> = the bot token of the Discord App.
+1. a .env file in the root of the project, with a variable called <code>BOT_TOKEN</code> = the bot token of the Discord App.
 
 ### Install Dependencies
 Run <code>npm install</code> in the root of the project to install the node dependencies.
