@@ -17,7 +17,7 @@ client.on('message', msg => {
 
 client.on('voiceStateUpdate', (oldChannel, newChannel) => {
   /**
-   * The ID of the queue object.
+   * The ID of the channel being used as the queue.
    */
   const queueID = 807286526408130590;
 
