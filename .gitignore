@@ -104,4 +104,4 @@ dist
 .tern-port
 
 # Firebase config
-*config.json
+*credentials.json
