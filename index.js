@@ -23,6 +23,7 @@ client.on('voiceStateUpdate', (oldChannel, newChannel) => {
 
   if (oldChannel.channelID == queueID) {
     // they left channel
+    const { serverId } = oldChannel.member.guild.id;
     const {id, username} = oldChannel.member.user;
     console.log(`user ${username} (${id}) left queue.`);
   } else if (newChannel.channelID == queueID) {
