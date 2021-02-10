@@ -24,6 +24,15 @@ const offerPlayerToQueue = (serverId, user) => {
 }
 
 /**
+ * Removes a specific user out of the queue, based on the userid.
+ * @param {*} serverId 
+ * @param {*} user 
+ */
+const removePlayerFromQueue = (serverId, user) => {
+
+}
+
+/**
  * Returns the number of players in the queue
  */
 const getQueueSize = (serverId) => {
