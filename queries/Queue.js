@@ -1,7 +1,7 @@
 /**
  * Gets latest Player from queue.
  */
-const dequePlayer = (serverId) => {
+const pollPlayer = (serverId) => {
 
 }
 
@@ -10,7 +10,7 @@ const dequePlayer = (serverId) => {
  * @param {*} numberOfPlayers 
  * @throws if there aren't that many players in the queue,
  */
-const dequePlayers = (serverId, numberOfPlayers) => {
+const pollPlayers = (serverId, numberOfPlayers) => {
   
 }
 
