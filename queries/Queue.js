@@ -1,7 +1,7 @@
 /**
  * Gets latest Player from queue.
  */
-const dequePlayer = () => {
+const dequePlayer = (serverId) => {
 
 }
 
@@ -10,7 +10,7 @@ const dequePlayer = () => {
  * @param {*} numberOfPlayers 
  * @throws if there aren't that many players in the queue,
  */
-const dequePlayers = (numberOfPlayers) => {
+const dequePlayers = (serverId, numberOfPlayers) => {
   
 }
 
@@ -19,13 +19,13 @@ const dequePlayers = (numberOfPlayers) => {
  * @param {*} user 
  * @throws if the player is already in the queue or the operation otherwise fails.
  */
-const offerPlayerToQueue = (user) => {
+const offerPlayerToQueue = (serverId, user) => {
   
 }
 
 /**
  * Returns the number of players in the queue
  */
-const getQueueSize = (channelId) => {
+const getQueueSize = (serverId) => {
 
 }
