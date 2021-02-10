@@ -7,6 +7,22 @@ const isInterviewInSession = (channelId) => {
 }
 
 /**
+ * Returns whether the channel is being used as a queue channel.
+ */
+const isQueueChannel = (serverId, channelId) => {
+
+}
+
+/**
+ * Returns whether the channel is an interview channel.
+ * @param {*} serverId 
+ * @param {*} channelId 
+ */
+const isInterviewChannel = (serverId, channelId) => {
+
+}
+
+/**
  * Starts an interview session in the channel with channelId between user1 and user2.
  * @param {*} channelId 
  * @param {*} user1 
