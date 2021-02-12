@@ -13,6 +13,7 @@ const pollPlayer = async (serverId) => pollPlayers(serverId, 1);
  */
 const pollPlayers = async (serverId, numberOfPlayers) =>
   QueueTable.child(serverId)
+    .orderByValue()
     .limitToFirst(numberOfPlayers)
     .get()
     .then(querySnapshot => {
