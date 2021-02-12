@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { offerPlayerToQueue, removePlayerFromQueue } = require('./queries/Queues.js');
 require('dotenv').config();
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
