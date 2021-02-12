@@ -41,7 +41,7 @@ const offerPlayerToQueue = async (serverId, user) =>
  * @param {*} serverId 
  * @param {*} user 
  */
-const removePlayerFromQueue = async (serverId, user) => await dispose(QueueTable.child(serverId).child(user));
+const removePlayerFromQueue = (serverId, user) => dispose(QueueTable.child(serverId).child(user));
 
 /**
  * Returns the number of players in the queue
