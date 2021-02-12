@@ -1,3 +1,6 @@
+const { SessionTable } = require("../database/firebase")
+const { useRoom } = require("./Server")
+
 /**
  * Returns whether an interview channel is current being used for interview.
  * @param {*} channelID 
@@ -27,6 +30,7 @@ const isInterviewChannel = (serverId, channelId) => {
  * @param {*} channelId 
  * @param {*} user1 
  * @param {*} user2 
+ * @returns the session data if successful.
  * @throws if the given channel is not an interview channel.
  */
 const startInterviewSession = (channelId, user1, user2) => {
@@ -38,10 +42,43 @@ const startInterviewSession = (channelId, user1, user2) => {
  * @param {*} serverId the id of the server to query.
  * @param {*} user1
  * @param {*} user2
+ * @returns the session data if successful.
  * @throws if there are no free interview channels.
  */
-const startInterviewSessionAnywhere = (serverId, user1, user2) => {
+const startInterviewSessionAnywhere = async (serverId, user1, user2) => {
 
+  // Gets the rooms that are currently free
+  const room = await getAnyFreeRoom(serverId);
+
+  // Grab a reference to the table we want to manipulate
+  const sessionReference = SessionTable.child(serverId).child(room);
+
+  // Make sure no session currently exists
+  const currentSession = await sessionReference.get();
+  if (!currentSession.exists()) {
+
+    // Grab the expiration date stamp.
+    const creationDate = new Date();
+    creationDate.setHours(creationDate.getHours() + 1);
+    const expirationTimestamp = + creationDate; // (+ Date is a hack to get the timestamp)
+
+    // Grab a random question from the database.
+    const question = await getRandomQuestion();
+
+    // Create a session in the database for this room.
+    await sessionReference.set({
+      users: [user1, user2],
+      question: question,
+      expiration: expirationTimestamp
+    });
+
+    // Mark the room as used.
+    useRoom(firstFreeRoom);
+
+    return true;
+  } else {
+    return new Error('The Session Already Exists in the database');
+  }
 }
 
 /**
