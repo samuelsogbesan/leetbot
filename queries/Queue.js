@@ -30,8 +30,7 @@ const pollPlayers = async (serverId, numberOfPlayers) =>
  * @throws if the player is already in the queue or the operation otherwise fails.
  */
 const offerPlayerToQueue = async (serverId, user) =>
-  QueueTable
-    .child(serverId)
+  QueueTable.child(serverId)
     .child(user)
     .set(+ new Date())
     .catch(err => console.log(err));
