@@ -26,15 +26,23 @@ client.on('voiceStateUpdate', (oldChannel, newChannel) => {
     const serverId = oldChannel.member.guild.id;
     const {id, username} = oldChannel.member.user;
 
-    removePlayerFromQueue(serverId, id);
-    console.log(`user ${username} (${id}) left queue.`);
+    try {
+      removePlayerFromQueue(serverId, id);
+      console.log(`user ${username} (${id}) left queue.`);
+    } catch (err) {
+      console.log(err);
+    }
   } else if (newChannel.channelID === queueID) {
     // User joined the queue channel.
     const serverId = newChannel.member.guild.id;
     const {id, username} = newChannel.member.user;
 
-    offerPlayerToQueue(serverId, id);
-    console.log(`user ${username} (${id}) joined queue.`);
+    try {
+      offerPlayerToQueue(serverId, id);
+      console.log(`user ${username} (${id}) joined queue.`);
+    } catch (err) {
+      console.log(err);
+    }
   }
 })
 
