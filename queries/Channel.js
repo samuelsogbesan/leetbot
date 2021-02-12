@@ -48,7 +48,12 @@ const startInterviewSession = (channelId, user1, user2) => {
 const startInterviewSessionAnywhere = async (serverId, user1, user2) => {
 
   // Gets the rooms that are currently free
-  const room = await getAnyFreeRoom(serverId);
+  try {
+    const room = await getAnyFreeRoom(serverId);
+  } catch (err) {
+    console.error('A room could not be found');
+    return err;
+  }
 
   // Grab a reference to the table we want to manipulate
   const sessionReference = SessionTable.child(serverId).child(room);
