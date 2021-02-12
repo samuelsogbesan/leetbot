@@ -58,7 +58,7 @@ const startInterviewSession = async (channelId, user1, user2) => {
       });
 
       // Mark the room as used.
-      useRoom(firstFreeRoom);
+      useRoom(channelId);
 
       return true;
     } else {
