@@ -59,31 +59,35 @@ const startInterviewSessionAnywhere = async (serverId, user1, user2) => {
   // Grab a reference to the table we want to manipulate
   const sessionReference = SessionTable.child(room);
 
-  // Make sure no session currently exists
-  const currentSession = await sessionReference.get();
-  if (!currentSession.exists()) {
+  try {
+    // Make sure no session currently exists
+    const currentSession = await sessionReference.get();
+    if (!currentSession.exists()) {
 
-    // Grab the expiration date stamp.
-    const creationDate = new Date();
-    creationDate.setHours(creationDate.getHours() + 1);
-    const expirationTimestamp = + creationDate; // (+ Date is a hack to get the timestamp)
+      // Grab the expiration date stamp.
+      const creationDate = new Date();
+      creationDate.setHours(creationDate.getHours() + 1);
+      const expirationTimestamp = + creationDate; // (+ Date is a hack to get the timestamp)
 
-    // Grab a random question from the database.
-    const question = await getRandomQuestion();
+      // Grab a random question from the database.
+      const question = await getRandomQuestion();
 
-    // Create a session in the database for this room.
-    await sessionReference.set({
-      users: [user1, user2],
-      question: question,
-      expiration: expirationTimestamp
-    });
+      // Create a session in the database for this room.
+      await sessionReference.set({
+        users: [user1, user2],
+        question: question,
+        expiration: expirationTimestamp
+      });
 
-    // Mark the room as used.
-    useRoom(firstFreeRoom);
+      // Mark the room as used.
+      useRoom(firstFreeRoom);
 
-    return true;
-  } else {
-    return new Error('The Session Already Exists in the database');
+      return true;
+    } else {
+      return new Error('The Session Already Exists in the database');
+    }
+  } catch (err) {
+    console.log(err);
   }
 }
 
