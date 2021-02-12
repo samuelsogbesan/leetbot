@@ -70,7 +70,7 @@ const startInterviewSession = async (channelId, user1, user2) => {
 }
 
 /**
- * Start an interview session in any free interview channel.
+ * Start an interview session in any free interview channel in the server.
  * @param {*} serverId the id of the server to query.
  * @param {*} user1
  * @param {*} user2
