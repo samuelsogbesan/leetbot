@@ -12,13 +12,14 @@ const pollPlayer = (serverId) => {
  * @param {*} numberOfPlayers 
  * @throws if there aren't that many players in the queue,
  */
-const pollPlayers = (serverId, numberOfPlayers) => {
-  QueueTable.child(serverId)
+const pollPlayers = async (serverId, numberOfPlayers) => {
+  const res = await QueueTable.child(serverId)
     .limitToFirst(numberOfPlayers)
     .get()
     .then(res => res.val())
-    .then(data => console.log(data))
     .catch(err => console.log(err));
+
+  return res;
 }
 
 /**
