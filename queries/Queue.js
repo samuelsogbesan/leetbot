@@ -32,8 +32,8 @@ const pollPlayers = async (serverId, numberOfPlayers) =>
 const offerPlayerToQueue = async (serverId, user) =>
   QueueTable
     .child(serverId)
-    .child(+ new Date())
-    .set(true)
+    .child(user)
+    .set(+ new Date())
     .catch(err => console.log(err));
 
 /**
@@ -49,3 +49,8 @@ const removePlayerFromQueue = async (serverId, user) => await dispose(QueueTable
 const getQueueSize = (serverId) => {
 
 }
+
+offerPlayerToQueue(1, 'kim')
+offerPlayerToQueue(1, 'alice')
+offerPlayerToQueue(1, 'katie')
+offerPlayerToQueue(1, 'fred')
