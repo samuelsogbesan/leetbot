@@ -79,7 +79,7 @@ const startInterviewSession = async (channelId, user1, user2) => {
  */
 const startInterviewSessionAnywhere = async (serverId, user1, user2) => {
 
-  // Gets the rooms that are currently free
+  // Get a room if there are currently any free.
   let room;
   try {
     room = await getAnyFreeRoom(serverId);
