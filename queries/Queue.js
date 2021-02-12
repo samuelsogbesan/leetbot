@@ -1,8 +1,10 @@
+const { QueueTable } = require('../database/firebase.js');
+
 /**
  * Gets latest Player from queue.
  */
 const pollPlayer = (serverId) => {
-
+  pollPlayers(serverId, 1);
 }
 
 /**
@@ -11,7 +13,12 @@ const pollPlayer = (serverId) => {
  * @throws if there aren't that many players in the queue,
  */
 const pollPlayers = (serverId, numberOfPlayers) => {
-  
+  QueueTable.child(serverId)
+    .limitToFirst(numberOfPlayers)
+    .get()
+    .then(res => res.val())
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
 }
 
 /**
@@ -20,7 +27,7 @@ const pollPlayers = (serverId, numberOfPlayers) => {
  * @throws if the player is already in the queue or the operation otherwise fails.
  */
 const offerPlayerToQueue = (serverId, user) => {
-  
+
 }
 
 /**
