@@ -1,5 +1,5 @@
-const { SessionTable } = require("../database/firebase")
-const { useRoom } = require("./Server")
+const { SessionTable } = require("../database/firebase");
+const { useRoom } = require("./Server");
 
 /**
  * Returns whether an interview channel is current being used for interview.
