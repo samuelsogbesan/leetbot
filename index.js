@@ -45,6 +45,6 @@ client.on('voiceStateUpdate', (oldChannel, newChannel) => {
       console.log(err);
     }
   }
-})
+});
 
 client.login(BOT_TOKEN);
