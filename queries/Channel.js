@@ -33,31 +33,9 @@ const isInterviewChannel = (serverId, channelId) => {
  * @returns the session data if successful.
  * @throws if the given channel is not an interview channel.
  */
-const startInterviewSession = (channelId, user1, user2) => {
-
-}
-
-/**
- * Start an interview session in any free interview channel.
- * @param {*} serverId the id of the server to query.
- * @param {*} user1
- * @param {*} user2
- * @returns the session data if successful.
- * @throws if there are no free interview channels.
- */
-const startInterviewSessionAnywhere = async (serverId, user1, user2) => {
-
-  // Gets the rooms that are currently free
-  let room;
-  try {
-    room = await getAnyFreeRoom(serverId);
-  } catch (err) {
-    console.error('A room could not be found');
-    return err;
-  }
-
+const startInterviewSession = async (channelId, user1, user2) => {
   // Grab a reference to the table we want to manipulate
-  const sessionReference = SessionTable.child(room);
+  const sessionReference = SessionTable.child(channelId);
 
   try {
     // Make sure no session currently exists
@@ -89,6 +67,28 @@ const startInterviewSessionAnywhere = async (serverId, user1, user2) => {
   } catch (err) {
     console.log(err);
   }
+}
+
+/**
+ * Start an interview session in any free interview channel.
+ * @param {*} serverId the id of the server to query.
+ * @param {*} user1
+ * @param {*} user2
+ * @returns the session data if successful.
+ * @throws if there are no free interview channels.
+ */
+const startInterviewSessionAnywhere = async (serverId, user1, user2) => {
+
+  // Gets the rooms that are currently free
+  let room;
+  try {
+    room = await getAnyFreeRoom(serverId);
+  } catch (err) {
+    console.error('A room could not be found');
+    return err;
+  }
+
+  return startInterviewSession(serverId, user1, user2);
 }
 
 /**
