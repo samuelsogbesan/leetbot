@@ -14,7 +14,7 @@ const pollPlayer = async (serverId) => pollPlayers(serverId, 1);
 const pollPlayers = async (serverId, numberOfPlayers) =>
   QueueTable.child(serverId)
     .orderByValue()
-    .limitToFirst(numberOfPlayers)
+    .limitToLast(numberOfPlayers)
     .get()
     .then(querySnapshot => {
       const data = querySnapshot.val();
@@ -49,8 +49,3 @@ const removePlayerFromQueue = async (serverId, user) => await dispose(QueueTable
 const getQueueSize = (serverId) => {
 
 }
-
-offerPlayerToQueue(1, 'kim')
-offerPlayerToQueue(1, 'alice')
-offerPlayerToQueue(1, 'katie')
-offerPlayerToQueue(1, 'fred')
