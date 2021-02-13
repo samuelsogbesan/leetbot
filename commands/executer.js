@@ -1,3 +1,5 @@
+const CommandProvider = require("./provider/CommandProvider");
+
 /**
  * Responsible for executing commands.
  * @param {*} command - an object following the command schema.
@@ -5,6 +7,27 @@
  * @returns true if the command was executed correctly
  * @throws if the command could not be executed.
  */
-const executer = (command) => {
+const executer = (commandObject) => {
+  var command;
+  try {
+    command = CommandProvider.getCommand(commandObject.command);
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
 
+  try {
+    const effects = command.run(commandObject.args);
+    console.log(`Return output: ${effects}`);
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+
+  return true;
 }
+
+executer({
+  command: 'helloWorld',
+  args: { arg1: ['value', 'and onemore'] }
+});
