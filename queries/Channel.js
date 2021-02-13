@@ -87,7 +87,7 @@ const startInterviewSessionAnywhere = async (serverId, user1, user2) => {
     return err;
   }
 
-  return startInterviewSession(serverId, user1, user2);
+  return startInterviewSession(room, user1, user2);
 }
 
 /**
