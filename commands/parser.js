@@ -18,24 +18,26 @@ const parse = (text) => {
   if(commandExpr.test(text)) {
     const command = /^(-\w+)/g.exec(text)[0];
     const rawArgs = text.match(/(\s--\w+(\s\w+)*)/g);
+    var args = {};
+
+    // Generate arguement pairs from raw arguements.
+    rawArgs.forEach(arg => {
+      var values = /\s\w+/g.exec(arg);
+      if (values) {
+        // Grab all the values as an array.
+        values = arg.match(/\s\w+/g);
+
+        // Do some post processing on the values to remove lingering spaces
+        for (var i = 0; i < values.length; i++) values[i] = values[i].trim();
+      }
+
+      const argName = /--\w+[^\s]/g.exec(arg)[0];
+      args[argName] = values;
+    });
 
     return {
       command: command,
-      args: rawArgs.map(arg => {
-        var values = /\s\w+/g.exec(arg);
-        if (values) {
-          // Grab all the values as an array.
-          values = arg.match(/\s\w+/g);
-
-          // Do some post processing on the values to remove lingering spaces
-          for (var i = 0; i < values.length; i++) values[i] = values[i].trim();
-        }
-
-        return ({
-          arg: /--\w+[^\s]/g.exec(arg)[0],
-          values: values
-        });
-      })
+      args: args
     }
   } else {
     return new Error('Can\'t parse input');
