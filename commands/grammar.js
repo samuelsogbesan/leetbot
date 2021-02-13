@@ -3,6 +3,7 @@
  */
 const grammar = [
   '-[a-zA-z]+[a-zA-z0-9]*',
+  '--[a-zA-z]+.+[a-zA-z0-9]*'
 ];
 
 module.exports = grammar;
