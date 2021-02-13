@@ -78,7 +78,6 @@ const startInterviewSession = async (channelId, user1, user2) => {
  * @throws if there are no free interview channels.
  */
 const startInterviewSessionAnywhere = async (serverId, user1, user2) => {
-
   // Get a room if there are currently any free.
   let room;
   try {
