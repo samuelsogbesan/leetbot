@@ -1,3 +1,5 @@
+const grammar = require('./grammar');
+
 /**
  * Entry point to the parsing mechanism.
  * @param {*} text - the input text to be parsed for a command.
@@ -7,8 +9,10 @@
  * An argument's value will be undefined if it is a flag.
  * @throws if the input text is malformed.
  */
-const parse = (text) => {
+const parse = (grammar, text) => {
 
 }
+
+parse(grammar, '-commandName --arg1 --arg2 value1 value2 value3 --arg3 value1');
 
 module.exports = parse;
