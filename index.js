@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 require('dotenv').config();
+const helpers = require('./utils/helperFunctions');
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
 
@@ -10,16 +11,15 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-  if (msg.content === 'ping') {
-    msg.channel.send('pong');
-  }
+  let parsedObj = helpers.parseMessage(msg);
+  console.log(parsedObj);
 });
 
 client.on('voiceStateUpdate', (oldChannel, newChannel) => {
   /**
    * The ID of the channel being used as the queue.
    */
-  const queueID = 807286526408130590;
+  const queueID = 754719214430060636;
 
   if (oldChannel.channelID == queueID) {
     // they left channel
