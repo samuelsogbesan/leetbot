@@ -10,7 +10,7 @@ const database = firebase.database();
 const firestore = firebase.firestore();
 
 module.exports = {
-  QuestionTable: database.ref('/questions'),
+  QuestionTable: firestore.collection('/questions'),
   ServerTable: database.ref('/servers'),
   QueueTable: database.ref('/queues'),
   ChannelTable: database.ref('/channels'),
