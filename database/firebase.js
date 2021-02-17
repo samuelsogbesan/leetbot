@@ -7,6 +7,7 @@ firebase.initializeApp({
 });
 
 const database = firebase.database();
+const firestore = firebase.firestore();
 
 module.exports = {
   QuestionTable: database.ref('/questions'),
