@@ -44,5 +44,6 @@ module.exports = {
   getAnyFreeRoom,
   getAllFreeRooms,
   getAllRooms,
-  useRoom
+  useRoom,
+  clearRoom
 };
