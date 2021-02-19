@@ -69,6 +69,7 @@ const startInterviewSession = async (serverId, channelId, user1, user2) => {
     }
   } catch (err) {
     console.log(err);
+    return err;
   }
 }
 
