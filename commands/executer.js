@@ -8,7 +8,7 @@ const CommandProvider = require("./provider/CommandProvider");
  * @throws if the command could not be executed.
  */
 const executer = (commandObject) => {
-  var command;
+  let command;
   try {
     command = CommandProvider.getCommand(commandObject.command);
   } catch (err) {
