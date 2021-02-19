@@ -40,4 +40,9 @@ const clearRoom = (serverId, channelId) => {
 
 }
 
-module.exports = {getAnyFreeRoom, getAllFreeRooms, getAllRooms, useRoom};
+module.exports = {
+  getAnyFreeRoom,
+  getAllFreeRooms,
+  getAllRooms,
+  useRoom
+};
