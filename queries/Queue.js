@@ -48,3 +48,10 @@ const removePlayerFromQueue = (serverId, user) => dispose(QueueTable.child(serve
 const getQueueSize = (serverId) => {
 
 }
+
+module.exports = {
+  pollPlayer,
+  pollPlayers,
+  offerPlayerToQueue,
+  removePlayerFromQueue
+}
