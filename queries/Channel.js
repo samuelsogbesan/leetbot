@@ -1,5 +1,7 @@
 const { SessionTable } = require("../database/firebase");
 const { useRoom } = require("./Server");
+const DIFFICULTY = require('../constants/difficulty.js');
+const randomInt = require('../utils/randInt.js');
 
 /**
  * Returns whether an interview channel is current being used for interview.
@@ -48,7 +50,8 @@ const startInterviewSession = async (channelId, user1, user2) => {
       const expirationTimestamp = + creationDate; // (+ Date is a hack to get the timestamp)
 
       // Grab a random question from the database.
-      const question = await getRandomQuestion();
+      const diff = Object.values(DIFFICULTY)[randomInt(0, 3)];
+      const question = await getRandomQuestion(diff);
 
       // Create a session in the database for this room.
       await sessionReference.set({
