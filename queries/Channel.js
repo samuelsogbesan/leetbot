@@ -114,3 +114,8 @@ const endInterviewSession = async (serverId, channelId) =>
 const getSession = (channelId) => {
 
 }
+
+module.exports = {
+  startInterviewSession,
+  startInterviewSessionAnywhere
+}
