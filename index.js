@@ -16,16 +16,16 @@ client.on('message', msg => {
   }
 });
 
-client.on('voiceStateUpdate', (oldChannel, newChannel) => {
-  if (oldChannel.channel !== null && isQueueChannel(oldChannel.guild.id, oldChannel.channel.id)) {
+client.on('voiceStateUpdate', (oldVoiceState, newVoiceState) => {
+  if (oldVoiceState.channel !== null && isQueueChannel(oldVoiceState.guild.id, oldVoiceState.channel.id)) {
     // they left channel
-    const {id, username} = oldChannel.member.user;
+    const {id, username} = oldVoiceState.member.user;
     console.log(`user ${username} (${id}) left queue.`);
   }
 
-  if (newChannel.channel !== null && isQueueChannel(newChannel.guild.id, newChannel.channel.id)) {
+  if (newVoiceState.channel !== null && isQueueChannel(newVoiceState.guild.id, newVoiceState.channel.id)) {
     // they joined channel
-    const {id, username} = newChannel.member.user;
+    const {id, username} = newVoiceState.member.user;
     console.log(`user ${username} (${id}) joined queue.`);
   }
 })
