@@ -29,18 +29,19 @@ const isInterviewChannel = (serverId, channelId) => {
 
 /**
  * Starts an interview session in the channel with channelId between user1 and user2.
- * @param {*} channelId 
- * @param {*} user1 
- * @param {*} user2 
+ * @param serverId the id of the server that the channel session will be started in.
+ * @param {*} channelId the id of the channel the session will be attached to.
+ * @param {*} user1 the first user to bind to the session.
+ * @param {*} user2 the second user to bind to the session.
  * @returns the session data if successful.
  * @throws if the given channel is not an interview channel.
  */
 const startInterviewSession = async (serverId, channelId, user1, user2) => {
-  // Grab a reference to the table we want to manipulate
+  // Grab a reference to the table we want to manipulate.
   const sessionReference = SessionTable.child(channelId);
 
   try {
-    // Make sure no session currently exists
+    // Make sure no session currently exists.
     const currentSession = await sessionReference.get();
     if (!currentSession.exists()) {
 
@@ -76,8 +77,8 @@ const startInterviewSession = async (serverId, channelId, user1, user2) => {
 /**
  * Start an interview session in any free interview channel in the server.
  * @param {*} serverId the id of the server to query.
- * @param {*} user1
- * @param {*} user2
+ * @param {*} user1 the first user to bind to the session.
+ * @param {*} user2 the second user to bind to the session.
  * @returns the session data if successful.
  * @throws if there are no free interview channels.
  */
