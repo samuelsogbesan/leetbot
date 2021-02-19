@@ -27,7 +27,4 @@ const executer = (commandObject) => {
   return true;
 }
 
-executer({
-  command: 'helloWorld',
-  args: { arg1: ['value', 'and onemore'] }
-});
+module.exports = executer;
