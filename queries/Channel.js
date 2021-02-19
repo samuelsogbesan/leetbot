@@ -97,9 +97,9 @@ const startInterviewSessionAnywhere = async (serverId, user1, user2) => {
  * If occupied, this ends an interview in channel with channelId.
  * @param {*} channelId 
  */
-const endInterviewSession = async (channelId) => SessionTable.child(channelId)
+const endInterviewSession = async (serverId, channelId) => SessionTable.child(channelId)
     .remove()
-    .then(() => clearRoom(channelId))
+    .then(() => clearRoom(serverId, channelId))
     .then(_ => true)
     .catch(err => console.log(err));
 
