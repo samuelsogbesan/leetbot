@@ -21,7 +21,9 @@ client.on('voiceStateUpdate', (oldChannel, newChannel) => {
     // they left channel
     const {id, username} = oldChannel.member.user;
     console.log(`user ${username} (${id}) left queue.`);
-  } else if (isQueueChannel(newChannel.guild.id, newChannel.channel.id)) {
+  }
+
+  if (newChannel.channel !== null && isQueueChannel(newChannel.guild.id, newChannel.channel.id)) {
     // they joined channel
     const {id, username} = newChannel.member.user;
     console.log(`user ${username} (${id}) joined queue.`);
