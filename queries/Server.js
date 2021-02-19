@@ -25,7 +25,7 @@ const getAllRooms = (serverId) => {
 }
 
 /**
- * Mark the given room as seen.
+ * Mark the given room as occupied.
  * @param {*} serverId 
  * @param {*} channelId 
  */
