@@ -1,4 +1,4 @@
-const { SessionTable } = require('../database/firebase.js');
+const { QuestionTable, SessionTable } = require('../database/firebase.js');
 const { useRoom } = require('./Server.js');
 const DIFFICULTY = require('../constants/difficulty.js');
 const randomInt = require('../utils/randInt.js');
@@ -109,13 +109,16 @@ const endInterviewSession = async (serverId, channelId) =>
 /**
  * If occupied, returns the session data for a given interview channel.
  * If no interview is in progress, returns undefined.
- * @param {*} channelId 
+ * @param {*} channelId
  */
-const getSession = (channelId) => {
-
-}
+const getSession = (channelId) =>
+  SessionTable.child(channelId)
+    .get()
+    .then(res => res.val())
+    .catch(err => console.log(err));
 
 module.exports = {
   startInterviewSession,
-  startInterviewSessionAnywhere
+  startInterviewSessionAnywhere,
+  getSession
 }
