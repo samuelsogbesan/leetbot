@@ -28,6 +28,6 @@ client.on('voiceStateUpdate', (oldVoiceState, newVoiceState) => {
     const {id, username} = newVoiceState.member.user;
     console.log(`user ${username} (${id}) joined queue.`);
   }
-})
+});
 
 client.login(BOT_TOKEN);
