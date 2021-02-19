@@ -12,6 +12,9 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
+  // Ignore messages from bots. Stops recursive loops and miscalls.
+  if (msg.author.bot) return;
+
   let command;
   try {
     command = parse(msg.content);
