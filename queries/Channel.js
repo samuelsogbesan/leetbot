@@ -35,7 +35,7 @@ const isInterviewChannel = (serverId, channelId) => {
  * @returns the session data if successful.
  * @throws if the given channel is not an interview channel.
  */
-const startInterviewSession = async (channelId, user1, user2) => {
+const startInterviewSession = async (serverId, channelId, user1, user2) => {
   // Grab a reference to the table we want to manipulate
   const sessionReference = SessionTable.child(channelId);
 
@@ -61,7 +61,7 @@ const startInterviewSession = async (channelId, user1, user2) => {
       });
 
       // Mark the room as used.
-      useRoom(channelId);
+      useRoom(serverId, channelId);
 
       return true;
     } else {
@@ -90,7 +90,7 @@ const startInterviewSessionAnywhere = async (serverId, user1, user2) => {
     return err;
   }
 
-  return startInterviewSession(room, user1, user2);
+  return startInterviewSession(serverId, room, user1, user2);
 }
 
 /**
