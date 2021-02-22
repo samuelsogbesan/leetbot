@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { offerPlayerToQueue, removePlayerFromQueue } = require('./queries/Queues.js');
 require('dotenv').config();
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
@@ -21,15 +22,29 @@ client.on('voiceStateUpdate', (oldChannel, newChannel) => {
    */
   const queueID = 807286526408130590;
 
-  if (oldChannel.channelID == queueID) {
-    // they left channel
+  if (oldChannel.channelID === queueID) {
+    // User left the queue channel.
+    const serverId = oldChannel.member.guild.id;
     const {id, username} = oldChannel.member.user;
-    console.log(`user ${username} (${id}) left queue.`);
-  } else if (newChannel.channelID == queueID) {
-    // they joined channel
+
+    try {
+      removePlayerFromQueue(serverId, id);
+      console.log(`user ${username} (${id}) left queue.`);
+    } catch (err) {
+      console.log(err);
+    }
+  } else if (newChannel.channelID === queueID) {
+    // User joined the queue channel.
+    const serverId = newChannel.member.guild.id;
     const {id, username} = newChannel.member.user;
-    console.log(`user ${username} (${id}) joined queue.`);
+
+    try {
+      offerPlayerToQueue(serverId, id);
+      console.log(`user ${username} (${id}) joined queue.`);
+    } catch (err) {
+      console.log(err);
+    }
   }
-})
+});
 
 client.login(BOT_TOKEN);

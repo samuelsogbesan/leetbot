@@ -1,40 +1,57 @@
+const dispose = require('../database/utils/dispose.js');
+const { QueueTable } = require('../database/firebase.js');
+
 /**
  * Gets latest Player from queue.
  */
-const pollPlayer = (serverId) => {
-
-}
+const pollPlayer = async (serverId) => pollPlayers(serverId, 1);
 
 /**
  * Get latest numberOfPlayers players from queue.
  * @param {*} numberOfPlayers 
  * @throws if there aren't that many players in the queue,
  */
-const pollPlayers = (serverId, numberOfPlayers) => {
-  
-}
+const pollPlayers = async (serverId, numberOfPlayers) =>
+  QueueTable.child(serverId)
+    .orderByValue() // Orders with NEWEST first
+    .limitToLast(numberOfPlayers) // Grab the OLDEST numberOfPlayers children
+    .get()
+    .then(querySnapshot => {
+      const data = querySnapshot.val();
+      Object.keys(data).forEach(user => dispose(querySnapshot.ref.child(user)));
+
+      return data;
+    })
+    .catch(err => console.log(err));
 
 /**
  * Adds the given user to the queue.
  * @param {*} user 
  * @throws if the player is already in the queue or the operation otherwise fails.
  */
-const offerPlayerToQueue = (serverId, user) => {
-  
-}
+const offerPlayerToQueue = async (serverId, user) =>
+  QueueTable.child(serverId)
+    .child(user)
+    .set(+ new Date())
+    .catch(err => console.log(err));
 
 /**
  * Removes a specific user out of the queue, based on the userid.
  * @param {*} serverId 
  * @param {*} user 
  */
-const removePlayerFromQueue = (serverId, user) => {
-
-}
+const removePlayerFromQueue = (serverId, user) => dispose(QueueTable.child(serverId).child(user));
 
 /**
  * Returns the number of players in the queue
  */
 const getQueueSize = (serverId) => {
 
+}
+
+module.exports = {
+  pollPlayer,
+  pollPlayers,
+  offerPlayerToQueue,
+  removePlayerFromQueue
 }
