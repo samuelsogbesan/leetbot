@@ -5,6 +5,7 @@ A Discord Bot Project by Sam & Baileigh.
 ## Installation
 ### Required Files
 1. a .env file in the root of the project, with a variable called <code>BOT_TOKEN</code> = the bot token of the Discord App.
+2. <code>database/credentials.json</code>, which holds the credentials for the Google Cloud Service Account (bot) that firebase uses to authenticate itself.
 
 ### Install Dependencies
 Run <code>npm install</code> in the root of the project to install the node dependencies.
