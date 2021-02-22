@@ -2,6 +2,7 @@ const { SessionTable } = require('../database/firebase.js');
 const { useRoom } = require('./Server.js');
 const DIFFICULTY = require('../constants/difficulty.js');
 const randomInt = require('../utils/randInt.js');
+const { getRandomQuestion } = require('./Question.js');
 
 /**
  * Returns whether an interview channel is current being used for interview.
