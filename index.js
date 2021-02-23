@@ -19,7 +19,7 @@ client.on('message', msg => {
   try {
     command = parse(msg.content);
   } catch (err) {
-    throw err;
+    console.error(err);
   }
 
   let response;
@@ -27,7 +27,7 @@ client.on('message', msg => {
     response = executer(command);
     msg.channel.send(response);
   } catch(err) {
-    throw err;
+    console.error(err);
   }
 });
 
