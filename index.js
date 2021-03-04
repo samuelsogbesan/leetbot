@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const { offerPlayerToQueue, removePlayerFromQueue } = require('./queries/Queues.js');
 require('dotenv').config();
+const { parse } = require('./commands/parser.js');
+const { executer } = require('./commands/executer.js');
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
 
@@ -11,8 +13,22 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-  if (msg.content === 'ping') {
-    msg.channel.send('pong');
+  // Ignore messages from bots. Stops recursive loops and miscalls.
+  if (msg.author.bot) return;
+
+  let command;
+  try {
+    command = parse(msg.content);
+  } catch (err) {
+    console.error(err);
+  }
+
+  let response;
+  try {
+    response = executer(command);
+    msg.channel.send(response);
+  } catch(err) {
+    console.error(err);
   }
 });
 
