@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { offerPlayerToQueue, removePlayerFromQueue } = require('./queries/Queues.js');
+const { offerPlayerToQueue, removePlayerFromQueue } = require('./queries/Queue.js');
 require('dotenv').config();
 const { isQueueChannel } = require('./queries/Channel');
 const { parse } = require('./commands/parser.js');

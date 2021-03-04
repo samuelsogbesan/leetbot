@@ -119,6 +119,7 @@ const getSession = (channelId) =>
     .catch(err => console.log(err));
 
 module.exports = {
+  isQueueChannel,
   startInterviewSession,
   startInterviewSessionAnywhere,
   getSession
