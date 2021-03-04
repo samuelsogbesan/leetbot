@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const { offerPlayerToQueue, removePlayerFromQueue } = require('./queries/Queues.js');
 require('dotenv').config();
+const { isQueueChannel } = require('./queries/Channel');
 const { parse } = require('./commands/parser.js');
 const { executer } = require('./commands/executer.js');
 
@@ -32,13 +33,8 @@ client.on('message', msg => {
   }
 });
 
-client.on('voiceStateUpdate', (oldChannel, newChannel) => {
-  /**
-   * The ID of the channel being used as the queue.
-   */
-  const queueID = 807286526408130590;
-
-  if (oldChannel.channelID === queueID) {
+client.on('voiceStateUpdate', (oldVoiceState, newVoiceState) => {
+  if (oldVoiceState.channel !== null && isQueueChannel(oldVoiceState.guild.id, oldVoiceState.channel.id)) {
     // User left the queue channel.
     const serverId = oldChannel.member.guild.id;
     const {id, username} = oldChannel.member.user;
@@ -49,7 +45,8 @@ client.on('voiceStateUpdate', (oldChannel, newChannel) => {
     } catch (err) {
       console.log(err);
     }
-  } else if (newChannel.channelID === queueID) {
+  }
+  if (newVoiceState.channel !== null && isQueueChannel(newVoiceState.guild.id, newVoiceState.channel.id)) {
     // User joined the queue channel.
     const serverId = newChannel.member.guild.id;
     const {id, username} = newChannel.member.user;
