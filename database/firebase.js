@@ -13,4 +13,5 @@ module.exports = {
   ServerTable: database.ref('/servers'),
   QueueTable: database.ref('/queues'),
   ChannelTable: database.ref('/channels'),
+  SessionTable: database.ref('/sessions')
 };
