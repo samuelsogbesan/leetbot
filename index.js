@@ -4,10 +4,11 @@ require('dotenv').config();
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
 
+// client = bot
 const client = new Discord.Client();
 
 client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
+  console.log(`Hello I am ${client.user.tag}!`);
 });
 
 client.on('message', msg => {
