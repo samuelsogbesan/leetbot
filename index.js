@@ -63,6 +63,7 @@ client.on('voiceStateUpdate', async (oldVoiceState, newVoiceState) => {
         : false
       );
 
+      // Find or create a free work room for them to hang out in.
       let targetRoom;
       if (freeInterviewChannels.size > 0) {
         targetRoom = freeInterviewChannels.array()[0];
@@ -70,14 +71,17 @@ client.on('voiceStateUpdate', async (oldVoiceState, newVoiceState) => {
         targetRoom = await server.channels.create(`Work Room ${interviewCategory.children.size+1}`, {type: 'voice', parent: interviewCategory, userLimit: 2});
       }
 
+      // Migrate players to that work room.
       poppedPlayers.forEach(player => {
         if (!player.user.bot) player.voice.setChannel(targetRoom).catch(err => console.log(err));
       });
     }
-  } else if (oldVoiceState.channel) {
+  }
+  // Check if a player is leaving a channel.
+  else if (oldVoiceState.channel) {
     const category = oldVoiceState.channel.parent;
 
-    // If all the people leave the interview channel, remove it.
+    // If all the people leave the interview channel, remove it
     if (category.name === CATEGORIES.INTERVIEW_CATEGORY && oldVoiceState.channel.members.size === 0) {
       oldVoiceState.channel.delete();
     }
