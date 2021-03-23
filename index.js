@@ -42,6 +42,7 @@ client.on('voiceStateUpdate', async (oldVoiceState, newVoiceState) => {
   }
 
   const interviewChannelLimit = 5;
+  const requiredPlayersToPop = 2;
 
   const server = newVoiceState.channel ? newVoiceState.channel.guild : oldVoiceState.channel.guild;
 
@@ -52,7 +53,7 @@ client.on('voiceStateUpdate', async (oldVoiceState, newVoiceState) => {
     const category = newVoiceState.channel.parent;
 
     // Check if they joined a queue and if there are enough players to intiate the pop.
-    if (category.name === CATEGORIES.QUEUE_CATEGORY && newVoiceState.channel.members.size > 0) {
+    if (category.name === CATEGORIES.QUEUE_CATEGORY && newVoiceState.channel.members.size >= requiredPlayersToPop) {
       // Pop two players off the queue.
       const poppedPlayers = newVoiceState.channel.members.sorted((userA, userB) => userA.createdTimestamp - userB.createdTimestamp).first(2);
 
