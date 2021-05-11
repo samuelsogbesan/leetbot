@@ -1,7 +1,5 @@
 const Discord = require('discord.js');
-const { offerPlayerToQueue, removePlayerFromQueue } = require('./queries/Queue.js');
 require('dotenv').config();
-const { isQueueChannel } = require('./queries/Channel');
 const { parse } = require('./commands/parser.js');
 const { executer } = require('./commands/executer.js');
 
@@ -33,29 +31,60 @@ client.on('message', msg => {
   }
 });
 
-client.on('voiceStateUpdate', (oldVoiceState, newVoiceState) => {
-  if (oldVoiceState.channel !== null && isQueueChannel(oldVoiceState.guild.id, oldVoiceState.channel.id)) {
-    // User left the queue channel.
-    const serverId = oldChannel.member.guild.id;
-    const {id, username} = oldChannel.member.user;
+/**
+ * Handles Queue Mechanism. Watches Channels in 'Queue' Category and dynamically previsions 'Interview' Channels as the queue grows.
+ * TODO: Add Queue Pause / Play functionality using roles. If the bots role is set to queue-pause, the bot should pause. If the bots role is set to queue-play, the bot should play.
+ */
+client.on('voiceStateUpdate', async (oldVoiceState, newVoiceState) => {
+  const CATEGORIES = {
+    INTERVIEW_CATEGORY: 'Interviews',
+    QUEUE_CATEGORY: 'Queue'
+  }
 
-    try {
-      removePlayerFromQueue(serverId, id);
-      console.log(`user ${username} (${id}) left queue.`);
-    } catch (err) {
-      console.log(err);
+  const interviewChannelLimit = 5;
+  const requiredPlayersToPop = 2;
+
+  const server = newVoiceState.channel ? newVoiceState.channel.guild : oldVoiceState.channel.guild;
+
+  const interviewCategory = server.channels.cache.find(channel => channel.type === 'category' && channel.name === CATEGORIES.INTERVIEW_CATEGORY);
+
+  // Check if a player is joining a channel.
+  if (newVoiceState.channel) {
+    const category = newVoiceState.channel.parent;
+
+    // Check if they joined a queue and if there are enough players to intiate the pop.
+    if (category.name === CATEGORIES.QUEUE_CATEGORY && newVoiceState.channel.members.size >= requiredPlayersToPop) {
+      // Pop two players off the queue.
+      const poppedPlayers = newVoiceState.channel.members.sorted((userA, userB) => userA.createdTimestamp - userB.createdTimestamp).first(2);
+
+      // Get all the free interview channels from this server.
+      const freeInterviewChannels = server.channels.cache.filter(channel => channel.type === 'voice'
+        && channel.parent.name === CATEGORIES.INTERVIEW_CATEGORY
+        && channel.members.size === 0 ? true
+        : false
+      );
+
+      // Find or create a free work room for them to hang out in.
+      let targetRoom;
+      if (freeInterviewChannels.size > 0) {
+        targetRoom = freeInterviewChannels.array()[0];
+      } else if (interviewCategory.members.size < interviewChannelLimit) {
+        targetRoom = await server.channels.create(`Work Room ${interviewCategory.children.size+1}`, {type: 'voice', parent: interviewCategory, userLimit: 2});
+      }
+
+      // Migrate players to that work room.
+      poppedPlayers.forEach(player => {
+        if (!player.user.bot) player.voice.setChannel(targetRoom).catch(err => console.log(err));
+      });
     }
   }
-  if (newVoiceState.channel !== null && isQueueChannel(newVoiceState.guild.id, newVoiceState.channel.id)) {
-    // User joined the queue channel.
-    const serverId = newChannel.member.guild.id;
-    const {id, username} = newChannel.member.user;
+  // Check if a player is leaving a channel.
+  else if (oldVoiceState.channel) {
+    const category = oldVoiceState.channel.parent;
 
-    try {
-      offerPlayerToQueue(serverId, id);
-      console.log(`user ${username} (${id}) joined queue.`);
-    } catch (err) {
-      console.log(err);
+    // If all the people leave the interview channel, remove it
+    if (category.name === CATEGORIES.INTERVIEW_CATEGORY && oldVoiceState.channel.members.size === 0) {
+      oldVoiceState.channel.delete();
     }
   }
 });
