@@ -1,4 +1,5 @@
 const Command = require("./Command");
+const InvalidCommandError = require("../errors/InvalidCommandError");
 
 const CommandProvider = {};
 const commands = {};
@@ -8,10 +9,12 @@ commands.helloWorld = new Command((args) => console.log(`Hello World! arguements
 
 // The entry point to access the commands.
 CommandProvider.getCommand = (commandName) => {
-  if (commands[commandName]) {
-    return commands[commandName];
+  let command = commandName.substr(1);
+
+  if (commands[command]) {
+    return commands[command];
   } else {
-    return new Error(`${commandName} is not a command.`);
+    throw new InvalidCommandError(`${command} is not a command.`);
   }
 }
 
