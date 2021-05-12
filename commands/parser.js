@@ -21,19 +21,21 @@ const parse = (text) => {
     var args = {};
 
     // Generate arguement pairs from raw arguements.
-    rawArgs.forEach(arg => {
-      var values = /\s\w+/g.exec(arg);
-      if (values) {
-        // Grab all the values as an array.
-        values = arg.match(/\s\w+/g);
+    if (rawArgs) {
+      rawArgs.forEach(arg => {
+        var values = /\s\w+/g.exec(arg);
+        if (values) {
+          // Grab all the values as an array.
+          values = arg.match(/\s\w+/g);
 
-        // Do some post processing on the values to remove lingering spaces
-        for (var i = 0; i < values.length; i++) values[i] = values[i].trim();
-      }
+          // Do some post processing on the values to remove lingering spaces
+          for (var i = 0; i < values.length; i++) values[i] = values[i].trim();
+        }
 
-      const argName = /--\w+[^\s]/g.exec(arg)[0];
-      args[argName] = values;
-    });
+        const argName = /--\w+[^\s]/g.exec(arg)[0];
+        args[argName] = values;
+      });
+    }
 
     return {
       command: command,
@@ -44,4 +46,4 @@ const parse = (text) => {
   }
 }
 
-module.exports = parse;
+module.exports = { parse };
