@@ -1,4 +1,5 @@
 const Command = require("./Command");
+const InvalidCommandError = require("../errors/InvalidCommandError");
 
 const CommandProvider = {};
 const commands = {};
@@ -11,7 +12,7 @@ CommandProvider.getCommand = (commandName) => {
   if (commands[commandName]) {
     return commands[commandName];
   } else {
-    return new Error(`${commandName} is not a command.`);
+    throw new InvalidCommandError(`${commandName} is not a command.`);
   }
 }
 

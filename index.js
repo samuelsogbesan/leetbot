@@ -11,7 +11,7 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.on('message', msg => {
+client.on('message', async msg => {
   // Ignore messages from bots. Stops recursive loops and miscalls.
   if (msg.author.bot) return;
 
@@ -24,10 +24,12 @@ client.on('message', msg => {
 
   let response;
   try {
-    response = executer(command);
+    response = await executer(command);
     msg.channel.send(response);
   } catch(err) {
-    console.error(err);
+    if (err.name !== 'InvalidCommandError') {
+      msg.channel.send(`We couldn't quite execute your command :(`);
+    }
   }
 });
 

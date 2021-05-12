@@ -6,9 +6,9 @@ class Command {
     this.command = Object.freeze(command);
   }
 
-  run = (args) => {
+  run = async (args) => {
     try {
-      this.command(args);
+      return await this.command(args);
     } catch (err) {
       console.error(err);
     }
