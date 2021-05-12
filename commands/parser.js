@@ -38,7 +38,7 @@ const parse = (text) => {
     }
 
     return {
-      command: command,
+      command: command.substr(1),
       args: args
     }
   } else {
