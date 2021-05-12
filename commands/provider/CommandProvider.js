@@ -9,12 +9,10 @@ commands.helloWorld = new Command((args) => console.log(`Hello World! arguements
 
 // The entry point to access the commands.
 CommandProvider.getCommand = (commandName) => {
-  let command = commandName.substr(1);
-
-  if (commands[command]) {
-    return commands[command];
+  if (commands[commandName]) {
+    return commands[commandName];
   } else {
-    throw new InvalidCommandError(`${command} is not a command.`);
+    throw new InvalidCommandError(`${commandName} is not a command.`);
   }
 }
 
