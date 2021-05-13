@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 require('dotenv').config();
 const { parse } = require('./commands/parser.js');
 const { executer } = require('./commands/executer.js');
+const getContext = require('./utils/getContext.js');
 
 const client = new Discord.Client();
 
@@ -17,11 +18,13 @@ client.on('message', async msg => {
   try {
     command = parse(msg.content);
   } catch (err) {
-    console.error(err);
+    return err;
   }
 
   let response;
   try {
+    command.args._ctx = getContext(msg);
+
     response = await executer(command);
     msg.channel.send(response);
   } catch(err) {

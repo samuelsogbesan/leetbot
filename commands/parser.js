@@ -42,7 +42,7 @@ const parse = (text) => {
       args: args
     }
   } else {
-    return new Error('Can\'t parse input');
+    throw new Error('Can\'t parse input');
   }
 }
 
