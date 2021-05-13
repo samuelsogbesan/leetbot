@@ -17,11 +17,13 @@ client.on('message', async msg => {
   try {
     command = parse(msg.content);
   } catch (err) {
-    console.error(err);
+    return err;
   }
 
   let response;
   try {
+    command.args._ctx = msg;
+
     response = await executer(command);
     msg.channel.send(response);
   } catch(err) {
